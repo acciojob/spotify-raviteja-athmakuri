@@ -60,9 +60,9 @@ public class SpotifyRepository {
             Artist a=new Artist(artistName);
             artists.add(a);
             artistAlbumMap.put(a,al);
-        }
+        }else artistAlbumMap.get(artistName).add(newAlbum);
         albums.add(newAlbum);
-        artistAlbumMap.get(artistName).add(newAlbum);
+
 //        for(Artist artist:artistAlbumMap.keySet()){
 //            if()
 //        }
