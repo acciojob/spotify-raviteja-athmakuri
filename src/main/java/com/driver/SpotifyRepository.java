@@ -52,14 +52,20 @@ public class SpotifyRepository {
     }
 
     public Album createAlbum(String title, String artistName) {
+
+        Album newAlbum=new Album(title);
+        List<Album> al=new ArrayList<>();
+        al.add(newAlbum);
         if(!artists.contains(artistName)){
             Artist a=new Artist(artistName);
             artists.add(a);
-            artistAlbumMap.put(a,new ArrayList<Album>());
+            artistAlbumMap.put(a,al);
         }
-        Album newAlbum=new Album(title,artistName);
         albums.add(newAlbum);
-        albumSongMap.put(newAlbum,new ArrayList<Song>());
+        artistAlbumMap.get(artistName).add(newAlbum);
+//        for(Artist artist:artistAlbumMap.keySet()){
+//            if()
+//        }
         return newAlbum;
     }
 
@@ -151,6 +157,14 @@ public class SpotifyRepository {
     }
 
     public Song likeSong(String mobile, String songTitle) throws Exception {
+
+        if(songLikeMap.containsKey(songTitle)){
+            //ArrayList<User> list=songLikeMap.get(songTitle);
+            //for(int i=0;i<list.size();i++){
+             //   if(list.get(i).getMobile()==mobile)
+              //      return new Song(songTitle,5);
+           // }
+       // }
         int flag=0;
         for(int i=0;i<users.size();i++){
             if(users.get(i).getMobile()==mobile)
