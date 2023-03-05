@@ -53,7 +53,12 @@ public class SpotifyRepository {
 
     public Album createAlbum(String title, String artistName) {
 
-        Album newAlbum=new Album(title);
+
+            Album newAlbum=new Album(title);
+            albums.add(newAlbum);
+
+
+
         List<Album> al=new ArrayList<>();
         al.add(newAlbum);
         if(!artists.contains(artistName)){
@@ -107,11 +112,14 @@ public class SpotifyRepository {
             if(users.get(i).getMobile()==mobile) {
                 flag++;
                 list.add(users.get(i));
+                break;
             }
         }
 
-        if(flag==0)
-            throw new Exception("User does not exist");
+        if(flag==0){
+
+
+            throw new Exception("User does not exist");}
         else playlistListenerMap.put(p,list);
         return p;
     }
@@ -130,6 +138,7 @@ public class SpotifyRepository {
             if(users.get(i).getMobile()==mobile) {
                 flag++;
                 l.add(users.get(i));
+                break;
             }
         }
 
@@ -141,7 +150,7 @@ public class SpotifyRepository {
     }
 
     public Playlist findPlaylist(String mobile, String playlistTitle) throws Exception {
-        Playlist p;
+        //Playlist p;
         User u=new User();
         int flag=0;
         for(int i=0;i<users.size();i++){
@@ -154,17 +163,19 @@ public class SpotifyRepository {
         list.add(u);
         if(flag==0)
             throw new Exception("User does not exist");
-        if(playlistSongMap.containsKey(playlistTitle)){
-             if(flag>0){
-                 if(!playlistListenerMap.containsKey(playlistTitle))
-                     playlistListenerMap.put(new Playlist(playlistTitle),list);
+        int j=0;
+        for(Playlist play:playlistListenerMap.keySet()){
+            if(play.getTitle().equals(playlistTitle)){
+                if(flag>0)
+                playlistListenerMap.get(play).add(u);
+                j++;
             }
-
-        }else{
-            Playlist play=new Playlist(playlistTitle);
-            playlistListenerMap.put(play,list);
+        }
+        if(j==0){
+            playlistListenerMap.put(new Playlist(playlistTitle),list);
             throw new Exception("Playlist does not exist");
         }
+
          return new Playlist(playlistTitle);
     }
 
@@ -221,3 +232,15 @@ public class SpotifyRepository {
         return str;
     }
 }
+//for(Playlist play:playlistSongMap.keySet()){
+//        if(play.getTitle()==(playlistTitle)){
+//        if(flag>0){
+//        if(!playlistListenerMap.containsKey(playlistTitle))
+//        playlistListenerMap.put(new Playlist(playlistTitle),list);
+//        }
+//
+//        }else{
+//        Playlist play=new Playlist(playlistTitle);
+//        playlistListenerMap.put(play,list);
+//        throw new Exception("Playlist does not exist");
+//        }
