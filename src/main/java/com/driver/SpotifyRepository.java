@@ -72,9 +72,21 @@ public class SpotifyRepository {
     public Song createSong(String title, String albumName, int length) throws Exception{
         Song s=new Song(title,length);
         songs.add(s);
-        if(albums.contains(albumName)){
-            albumSongMap.get(albumName).add(s);
-        }else throw new Exception("Album does not exist");
+        List<Song> al=new ArrayList<>();
+        al.add(s);
+        int flag=0;
+        for(int i=0;i<albums.size();i++){
+            if(albums.get(i).getTitle()==albumName){
+                albumSongMap.put(albums.get(i),al);
+                flag++;
+            }
+        }
+          if(flag==0){
+              Album a=new Album(albumName);
+              albumSongMap.put(a,al);
+
+             throw new Exception("Album does not exist");}
+
 
 
         return s;
