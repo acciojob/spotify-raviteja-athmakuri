@@ -165,7 +165,7 @@ public class SpotifyRepository {
             throw new Exception("User does not exist");
         int j=0;
         for(Playlist play:playlistListenerMap.keySet()){
-            if(play.getTitle().equals(playlistTitle)){
+            if(play.getTitle()==(playlistTitle)){
                 if(flag>0)
                 playlistListenerMap.get(play).add(u);
                 j++;
