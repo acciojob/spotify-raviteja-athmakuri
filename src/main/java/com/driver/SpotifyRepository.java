@@ -123,17 +123,75 @@ public class SpotifyRepository {
     }
 
     public Playlist findPlaylist(String mobile, String playlistTitle) throws Exception {
-        if(playlistSongMap.containsKey(playlistTitle))
+        Playlist p;
+        User u=new User();
+        int flag=0;
+        for(int i=0;i<users.size();i++){
+            if(users.get(i).getMobile()==mobile) {
+                u = users.get(i);
+                flag++;
+            }
+        }
+        ArrayList<User> list=new ArrayList<User>();
+        list.add(u);
+        if(flag==0)
+            throw new Exception("User does not exist");
+        if(playlistSongMap.containsKey(playlistTitle)){
+             if(flag>0){
+                 if(!playlistListenerMap.containsKey(playlistTitle))
+                     playlistListenerMap.put(new Playlist(playlistTitle),list);
+            }
 
+        }else{
+            Playlist play=new Playlist(playlistTitle);
+            playlistListenerMap.put(play,list);
+            throw new Exception("Playlist does not exist");
+        }
+         return new Playlist(playlistTitle);
     }
 
     public Song likeSong(String mobile, String songTitle) throws Exception {
+        int flag=0;
+        for(int i=0;i<users.size();i++){
+            if(users.get(i).getMobile()==mobile)
+                flag++;
+        }
+        if(flag==0)
+            throw new Exception("User does not exist");
+        flag=0;
+        for(int i=0;i<songs.size();i++){
+            if(songs.get(i).getTitle()==songTitle)
+                flag++;
+        }
+        if(flag==0)
+            throw new Exception("Song does not exist");
+        return new Song(songTitle,5);
 
     }
 
     public String mostPopularArtist() {
+        int max=0;
+        String str="";
+        for(int i=0;i<artists.size();i++){
+            if(artists.get(i).getLikes()>max){
+                max=artists.get(i).getLikes();
+                str=artists.get(i).getName();
+            }
+            //max=Math.max(artists.get(i).getLikes(),max);
+
+        }
+        return str;
     }
 
     public String mostPopularSong() {
+        int max=0;
+        String str="";
+        for(int i=0;i<songs.size();i++){
+            if(songs.get(i).getLikes()>max){
+                max=songs.get(i).getLikes();
+                str=songs.get(i).getTitle();
+            }
+        }
+        return str;
     }
 }
