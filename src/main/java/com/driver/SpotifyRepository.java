@@ -158,7 +158,7 @@ public class SpotifyRepository {
 
     public Song likeSong(String mobile, String songTitle) throws Exception {
 
-        if(songLikeMap.containsKey(songTitle)){
+        //if(songLikeMap.containsKey(songTitle)){
             //ArrayList<User> list=songLikeMap.get(songTitle);
             //for(int i=0;i<list.size();i++){
              //   if(list.get(i).getMobile()==mobile)
